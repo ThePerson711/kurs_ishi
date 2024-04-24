@@ -3,9 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurs_ishi</title>
+    <title>For Calc</title>
+    <style>
+        *{
+            user-select: none;
+        }
+        
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px grey; 
+      border-radius: 10px;
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: rgb(139, 136, 136); 
+      border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(112, 110, 110); 
+    }
+        body {
+            padding: 0;
+        }
+        .screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            inset: 0;
+            position: absolute;
+            background-color: aqua;
+            width: calc(1vw*100);
+            height: calc(1vh*100);
+        }
+        .main_panel {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: green;
+            width: calc(1vw*100);
+            height: calc(1vh*10);
+        }
+            .main_panel_elem {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: calc(1vw*10);
+                height: calc(1vh*6);
+                background-color: red;
+            }
+        .func_panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: start;
+            background-color: yellowgreen;
+            width: calc(1vw*100);
+            height: calc(1vh*90);
+            overflow-y: auto;
+        }
+            .func_elem {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: calc(1vh*2) calc(1vw*10);
+                width: calc(1vw*60);
+                height: calc(1vh*10);
+                background-color: chocolate;
+            }
+                .func_help_ {
+                    display: flex; 
+                    flex-direction: row; 
+                    justify-content: space-around; 
+                    align-items: center;
+                    height: calc(1vh*3);
+                }
+                .func_ans {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: pink;
+                    width: calc(1vw*60);
+                    height: calc(1vh*8);
+                }
+                .func_num {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: red;
+                    width: calc(1vw*8);
+                    height: calc(1vh*3);
+                    transform: translateY(Calc(1vh*(0)));
+                    zoom: 1.2;
+                }
+                .func_name {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: red;
+                    width: calc(1vw*30);
+                    height: calc(1vh*3);
+                    margin: 0 calc(1vw*2);
+                    transform: translateY(Calc(1vh*(0)));
+                    zoom: 1.2;
+                }
+                .func_enF {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transform: translateY(Calc(1vh*(0)));
+                    background-color: red;
+                    width: calc(1vw*8);
+                    height: calc(1vh*3);
+                    zoom: 1.3;
+                }
+    </style>
 </head>
 <body>
-    
+    <div class="screen" id="screen">
+        <div class="main_panel" id="main_panel">
+            <div class="main_panel_elem" id="add_elem" onclick="AddElem();">
+                Add
+            </div>
+        </div>
+        <div class="func_panel" id="func_panel">
+            <!--
+            <div class="func_elem" id="func_elem_id_0">
+                <div class="func_help_">
+                    <div class="func_num" id="func_num_id_0">
+                        0
+                    </div>
+                    <div class="func_name" id="func_name_id_0">
+                        Name
+                    </div>
+                    <div class="func_enF" id="func_enF_id_0">
+                        #
+                    </div>
+                </div>
+                <div class="func_ans" id="func_ans_id_0">
+                    Answer
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <script>
+        let Elements = [];
+        const func_panel = document.getElementById("func_panel");
+
+        if (localStorage.getItem("Elements_data_for_LS") !== null) {
+            Elements = ( JSON.parse(localStorage.getItem("Elements_data_for_LS")));
+        }
+        
+        for (let i = 0; i < Elements.length; i++) {
+            AddInnerPage(i+1);
+        }
+
+
+        UpDate();
+        //
+        function AddElem() {
+            Elements.push({
+                name: "Name",
+                func: "NaN"
+            });
+            NumOfNew = Elements.length;
+            AddInnerPage(NumOfNew);
+            SetData();
+            UpDate();
+        }
+        //
+        function UpDate() {
+            for (let i = 0; i < Elements.length; i++) {
+                document.getElementById(`func_num_id_${i+1}`).innerHTML = String(i+1);
+                document.getElementById(`func_name_id_${i+1}`).innerHTML = String(Elements[i].name);
+                document.getElementById(`func_ans_id_${i+1}`).innerHTML = String(Elements[i].func);
+                
+            }
+            console.log("///")
+        }
+        //
+        function SetData() {
+            localStorage.setItem("Elements_data_for_LS", JSON.stringify(Elements));
+        }
+        //
+        
+        //
+        function AddInnerPage(ind_) {
+            func_panel.innerHTML += `<div class="func_elem" id="func_elem_id_${ind_}">
+                <div class="func_help_">
+                    <div class="func_num" id="func_num_id_${ind_}">
+                        0
+                    </div>
+                    <div class="func_name" id="func_name_id_${ind_}">
+                        Name
+                    </div>
+                    <div class="func_enF" id="func_enF_id_${ind_}">
+                        #
+                    </div>
+                </div>
+                <div class="func_ans" id="func_ans_id_${ind_}">
+                    Answer
+                </div>
+            </div>`;
+        }
+    </script>
 </body>
 </html>
