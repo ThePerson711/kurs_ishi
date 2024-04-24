@@ -125,9 +125,39 @@
                     height: calc(1vh*3);
                     zoom: 1.3;
                 }
+
+        .data_enter {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: fixed;
+            background-color: blue;
+            width: calc(1vw*60);
+            height: calc(1vh*45);
+            z-index: 2;
+            visibility: hidden;
+        }
+        .data_enter_textarea {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
+    <div class="data_enter" id="data_enter">
+        <p id="data_enter_num">Num - 0</p>
+        <p class="data_enter_title">Name</p>
+        <textarea class="data_enter_textarea" placeholder="Name" id="DET_name"></textarea>
+        <p class="data_enter_title">Function</p>
+        <textarea class="data_enter_textarea" placeholder="Function" id="DET_func"></textarea>
+        <button class="data_enter_btn" onclick="
+            Except_data();">Ok</button>
+    </div>
     <div class="screen" id="screen">
         <div class="main_panel" id="main_panel">
             <div class="main_panel_elem" id="add_elem" onclick="AddElem();">
@@ -135,30 +165,14 @@
             </div>
         </div>
         <div class="func_panel" id="func_panel">
-            <!--
-            <div class="func_elem" id="func_elem_id_0">
-                <div class="func_help_">
-                    <div class="func_num" id="func_num_id_0">
-                        0
-                    </div>
-                    <div class="func_name" id="func_name_id_0">
-                        Name
-                    </div>
-                    <div class="func_enF" id="func_enF_id_0">
-                        #
-                    </div>
-                </div>
-                <div class="func_ans" id="func_ans_id_0">
-                    Answer
-                </div>
-            </div>
-            -->
         </div>
     </div>
 
     <script>
         let Elements = [];
+        let Curent_changes = 0;
         const func_panel = document.getElementById("func_panel");
+        const data_enter = document.getElementById("data_enter");
 
         if (localStorage.getItem("Elements_data_for_LS") !== null) {
             Elements = ( JSON.parse(localStorage.getItem("Elements_data_for_LS")));
@@ -168,8 +182,11 @@
             AddInnerPage(i+1);
         }
 
+        
+
 
         UpDate();
+
         //
         function AddElem() {
             Elements.push({
@@ -196,7 +213,21 @@
             localStorage.setItem("Elements_data_for_LS", JSON.stringify(Elements));
         }
         //
-        
+        function Func_Enter_Data(index_) {
+            Curent_changes = index_;
+            document.getElementById("data_enter_num").innerHTML = `Num - ${Curent_changes}`;
+            document.getElementById("DET_name").innerHTML = Elements[Curent_changes-1].name;
+            document.getElementById("DET_func").innerHTML = Elements[Curent_changes-1].func;            
+            data_enter.style = "visibility: visible;";
+        }
+        //
+        function Except_data() {
+            console.log(Curent_changes)
+            Elements[Curent_changes-1].name = document.getElementById("DET_name").value;
+            Elements[Curent_changes-1].func = document.getElementById("DET_func").value;
+            data_enter.style = "visibility: hidden;";
+            UpDate();
+        }
         //
         function AddInnerPage(ind_) {
             func_panel.innerHTML += `<div class="func_elem" id="func_elem_id_${ind_}">
@@ -207,7 +238,8 @@
                     <div class="func_name" id="func_name_id_${ind_}">
                         Name
                     </div>
-                    <div class="func_enF" id="func_enF_id_${ind_}">
+                    <div class="func_enF" id="func_enF_id_${ind_}" onclick="
+                    Func_Enter_Data(${ind_})">
                         #
                     </div>
                 </div>
