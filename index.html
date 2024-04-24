@@ -244,6 +244,9 @@
             document.getElementById("data_enter_num").innerHTML = `Num - ${Curent_changes}`;
             document.getElementById("DET_name").innerHTML = Elements[Curent_changes-1].name;
             document.getElementById("DET_func").innerHTML = Elements[Curent_changes-1].func;            
+            document.getElementById("DET_name").value = Elements[Curent_changes-1].name;
+            document.getElementById("DET_func").value = Elements[Curent_changes-1].func;            
+            
             data_enter.style = "visibility: visible;";
         }
         //
@@ -279,6 +282,28 @@
                 </div>
             </div>`;
         }
+        //
+        function kvadrat(param1) {
+            return Math.pow(param1, 2);
+        }
+        function ildiz(param1) {
+            return Math.pow(param1, (1/2));
+        }
+        function daraja(param1, param2) {
+            return Math.pow(param1, param2);
+        }
+        function sin(param1) {
+            return Math.sin(param1*Math.PI/180);
+        }
+        function cos(param1) {
+            return Math.cos(param1*Math.PI/180);
+        }
+        function tan(param1) {
+            return Math.tan(param1*Math.PI/180);
+        }        function sin(param1) {
+            return Math.sin(param1*Math.PI/180);
+        }
+
     </script>
 </body>
 </html>
