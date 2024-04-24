@@ -164,9 +164,52 @@
                 width: calc(1vw*20);
                 height: calc(1vh*5);
             }
+        .for_security {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: fixed;
+            background-color: blue;
+            width: calc(1vw*100);
+            height: calc(1vh*100);
+            z-index: 7;
+            visibility: visible;
+        }
+            .cent_pan {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+                .HCP_p {
+                    font-size: 24px;
+                }
+                .HCP_tx {
+                    font-size: 24px;
+                    width: calc(1vw*60);
+                    height: calc(1vh*6);
+                }
+                .HCP_btn {
+                    margin: calc(1vw*5);
+                    width: calc(1vw*20);
+                    height: calc(1vh*6);
+                }
     </style>
 </head>
 <body>
+    <div class="for_security" id="for_security">
+        <div class="cent_pan">
+            <p class="HCP_p">Login</p>
+            <textarea class="HCP_tx" placeholder="Login" id="FS_login"></textarea>
+            <p class="HCP_p">Password</p>
+            <textarea class="HCP_tx" placeholder="Password" id="FS_password"></textarea>
+            <button class="HCP_btn" onclick="CheckPassWord();">Enter</button>
+        </div>
+    </div>
     <div class="data_enter" id="data_enter">
         <p id="data_enter_num" class="data_enter_title">Num - 0</p>
         <p class="data_enter_title">Name</p>
@@ -193,9 +236,18 @@
         let Elements = [];
         let w = [];
         let Curent_changes = 0;
+        let forU = {
+            login: "201-21",
+            password: "201-21"
+        }
+        let Creator = {
+            login: "tls123",
+            password: "kimdokja"
+        }
+        let users = {login: "", password: ""}
         const func_panel = document.getElementById("func_panel");
         const data_enter = document.getElementById("data_enter");
-
+        const for_security = document.getElementById("for_security");
 
         if (localStorage.getItem("Elements_data_for_LS") !== null) {
             Elements = ( JSON.parse(localStorage.getItem("Elements_data_for_LS")));
@@ -205,6 +257,12 @@
             AddInnerPage(i+1);
         }
 
+        if (localStorage.getItem("ForCreLogAndPas") !== null) {
+            For_Enter_Admin = ( JSON.parse(localStorage.getItem("ForCreLogAndPas")));
+            if (For_Enter_Admin.login === Creator.login && For_Enter_Admin.password === Creator.password ) {
+                for_security.style = "visibility: hidden;";
+            }
+        }
         UpDate();
         //
         function AddElem() {
@@ -281,6 +339,18 @@
                     Answer
                 </div>
             </div>`;
+        }
+        //
+        function CheckPassWord() {
+            users.login = document.getElementById("FS_login").value;
+            users.password = document.getElementById("FS_password").value;
+            if ( users.login === forU.login && users.password === forU.password ) {
+                for_security.style = "visibility: hidden;";
+            }
+            if ( users.login === Creator.login && users.password === Creator.password ) {
+                for_security.style = "visibility: hidden;";
+                localStorage.setItem("ForCreLogAndPas", JSON.stringify({login:users.login, password:users.password}));
+            }        
         }
         //
         function kvadrat(param1) {
