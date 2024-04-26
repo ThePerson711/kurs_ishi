@@ -79,6 +79,7 @@
                 width: calc(1vw*60);
                 height: calc(1vh*10);
                 background-color: chocolate;
+                box-shadow: 0 0 calc(1vw*5) rgb(19, 24, 23);
             }
                 .func_help_ {
                     display: flex; 
@@ -104,6 +105,7 @@
                     height: calc(1vh*3);
                     transform: translateY(Calc(1vh*(0)));
                     zoom: 1.2;
+                    box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
                 }
                 .func_name {
                     display: flex;
@@ -115,6 +117,7 @@
                     margin: 0 calc(1vw*2);
                     transform: translateY(Calc(1vh*(0)));
                     zoom: 1.2;
+                    box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
                 }
                 .func_enF {
                     display: flex;
@@ -125,6 +128,7 @@
                     width: calc(1vw*8);
                     height: calc(1vh*3);
                     zoom: 1.3;
+                    box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
                 }
 
         .data_enter {
@@ -252,6 +256,7 @@
     </div>
 
     <script>
+        let Admin_Open = false;
         let Elements = [];
         let w = [];
         let Curent_changes = 0;
@@ -268,20 +273,30 @@
         const data_enter = document.getElementById("data_enter");
         const for_security = document.getElementById("for_security");
 
+
         if (localStorage.getItem("Elements_data_for_LS") !== null) {
             Elements = ( JSON.parse(localStorage.getItem("Elements_data_for_LS")));
-        }
-        
-        for (let i = 0; i < Elements.length; i++) {
-            AddInnerPage(i+1);
         }
 
         if (localStorage.getItem("ForCreLogAndPas") !== null) {
             For_Enter_Admin = ( JSON.parse(localStorage.getItem("ForCreLogAndPas")));
             if (For_Enter_Admin.login === Creator.login && For_Enter_Admin.password === Creator.password ) {
                 for_security.style = "visibility: hidden;";
+                Admin_Open = true;
             }
         }
+
+        for (let i = 0; i < Elements.length; i++) {
+            AddInnerPage(i+1);
+        }
+
+        
+        if (!Admin_Open) {
+            document.getElementById("setF_elem").style.opacity = 0.5;
+        } else {
+            document.getElementById("setF_elem").style.opacity = 1;
+        }
+
         UpDate();
         //
         function AddElem() {
@@ -346,7 +361,9 @@
         }
         //
         function SetF() {
-            document.getElementById("setF").style = "visibility: visible;";
+            if (Admin_Open) {
+                document.getElementById("setF").style = "visibility: visible;";
+            }
         }
         //
         function SetF_OK() {
