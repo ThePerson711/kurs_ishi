@@ -63,10 +63,11 @@
             display: flex;
             flex-direction: column;
             justify-content: start;
-            align-items: start;
+            align-items: center;
             background-color: yellowgreen;
             width: calc(1vw*100);
             height: calc(1vh*90);
+            padding-bottom: calc(1vh*12);
             overflow-y: auto;
         }
             .func_elem {
@@ -153,6 +154,9 @@
                 .txar_2 {
                     height: calc(1vh*12);
                 }
+                .txar_3 {
+                    height: calc(1vh*26);
+                }
             .data_enter_title {
                 font-size: 20px;
                 margin: 0;
@@ -219,6 +223,12 @@
         <button class="data_enter_btn" onclick="
             Except_data();">Ok</button>
     </div>
+    <div class="data_enter" id="setF">
+        <p class="data_enter_title">Enter Data</p>
+        <textarea class="data_enter_textarea txar_3" placeholder="Enter Data" id="DET_import"></textarea>
+        <button class="data_enter_btn" onclick="
+            SetF_OK();">Ok</button>
+    </div>
     <div class="screen" id="screen">
         <div class="main_panel" id="main_panel">
             <div class="main_panel_elem" id="add_elem" onclick="AddElem();">
@@ -226,6 +236,15 @@
             </div>
             <div class="main_panel_elem" id="clear_elem" onclick="ClearData();">
                 Clear
+            </div>
+            <div class="main_panel_elem" id="copy_elem" onclick="CopyData();">
+                Copy
+            </div>
+            <div class="main_panel_elem" id="setF_elem" onclick="SetF();">
+                Set(F)
+            </div>
+            <div class="main_panel_elem" id="Projects" onclick="ProjOpenList();">
+                Proj
             </div>
         </div>
         <div class="func_panel" id="func_panel">
@@ -267,8 +286,8 @@
         //
         function AddElem() {
             Elements.push({
-                name: "Name",
-                func: "NaN"
+                name: `Name_${Elements.length+1}`,
+                func: "0"
             });
             NumOfNew = Elements.length;
             AddInnerPage(NumOfNew);
@@ -318,7 +337,33 @@
         //
         function ClearData() {
             localStorage.removeItem("Elements_data_for_LS");
+            Elements = [];
             func_panel.innerHTML = "";
+        }
+        //
+        function CopyData() {
+            navigator.clipboard.writeText( (localStorage.getItem("Elements_data_for_LS")) );
+        }
+        //
+        function SetF() {
+            document.getElementById("setF").style = "visibility: visible;";
+        }
+        //
+        function SetF_OK() {
+            if (document.getElementById("DET_import").value !== "") {
+                ClearData();
+                localStorage.setItem("Elements_data_for_LS", (document.getElementById("DET_import").value));
+                Elements = JSON.parse(localStorage.getItem("Elements_data_for_LS"));
+                for (let i = 0; i < Elements.length; i++) {
+                    AddInnerPage(i+1);
+                }
+                UpDate();
+            }
+            document.getElementById("setF").style = "visibility: hidden;";
+        }
+        //
+        function ProjOpenList() {
+
         }
         //
         function AddInnerPage(ind_) {
@@ -370,10 +415,20 @@
         }
         function tan(param1) {
             return Math.tan(param1*Math.PI/180);
-        }        function sin(param1) {
-            return Math.sin(param1*Math.PI/180);
+        }      
+        function summa(param1, param2) {
+            answer_ = 0
+            for (let i_ = param1; i_ <= param2; i_++) {
+                answer_ += w[i_];
+            }
+            return answer_;
+        }  
+        function ceil(param1) {
+            return Math.ceil(param1);
         }
-
+        function floor(param1) {
+            return Math.floor(param1);
+        }
     </script>
 </body>
 </html>
