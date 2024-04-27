@@ -347,12 +347,60 @@
                 Wx: 39.7
             },
             {
+                N: 12,
+                g: 11.5,
+                b: 64,
+                t: 7.3,
+                Ix: 350,
+                Wx: 58.4
+            },
+            {
+                N: 14,
+                g: 13.7,
+                b: 73,
+                t: 7.5,
+                Ix: 572,
+                Wx: 81.7
+            },
+            {
+                N: 16,
+                g: 15.9,
+                b: 81,
+                t: 7.8,
+                Ix: 873,
+                Wx: 109
+            },
+            {
+                N: 18,
+                g: 18.4,
+                b: 90,
+                t: 8.1,
+                Ix: 1290,
+                Wx: 143
+            },
+            {
                 N: 20,
                 g: 21,
                 b: 100,
                 t: 8.4,
                 Ix: 1840,
                 Wx: 184
+            },
+            {
+                N: 22,
+                g: 24,
+                b: 110,
+                t: 8.7,
+                Ix: 2550,
+                Wx: 232
+            },
+            {
+                N: 24,
+                g: 27.3,
+                b: 115,
+                t: 9.5,
+                Ix: 3460,
+                Wx: 289
             },
             {
                 N: 27,
@@ -371,6 +419,38 @@
                 Wx: 472
             },
             {
+                N: 33,
+                g: 42.2,
+                b: 140,
+                t: 11.2,
+                Ix: 9840,
+                Wx: 597
+            },
+            {
+                N: 36,
+                g: 48.6,
+                b: 145,
+                t: 12.3,
+                Ix: 13380,
+                Wx: 743
+            },
+            {
+                N: 40,
+                g: 57,
+                b: 155,
+                t: 13,
+                Ix: 19063,
+                Wx: 953
+            },
+            {
+                N: 45,
+                g: 66.5,
+                b: 160,
+                t: 14.2,
+                Ix: 27696,
+                Wx: 1231
+            },
+            {
                 N: 50,
                 g: 78.5,
                 b: 170,
@@ -387,7 +467,7 @@
                 Wx: 2035
             }
         ];
-        let VERSION = "27.04.2024/13:34";
+        let VERSION = "version::1.01.02\ndata::27.04.2024\ntime::14:30";
         let Admin_Open = false;
         let Elements = [];
         let w = [];
@@ -533,15 +613,15 @@
         function AddExtra_OK() {
             Num_for_extra = document.getElementById("add_extra_inp").value;
             
-            if (Num_for_extra >= 1 && Num_for_extra < Elements.length) {
+            if (Num_for_extra >= 1 && Num_for_extra <= Elements.length) {
                 console.log(Num_for_extra);
                 Elements.splice(Num_for_extra - 1, 0, {
                     name: `Name_${Elements.length+1}`,
                     func: "0"
                 });
                 for (let i_ = Num_for_extra; i_ < Elements.length; i_++) {
-                    console.log("> ", SlideFuncOneStep(Elements[i_].func) )
-                    Elements[i_].func = SlideFuncOneStep(Elements[i_].func);
+                    console.log("> ", SlideFuncOneStep(Elements[i_].func, Num_for_extra) )
+                    Elements[i_].func = SlideFuncOneStep(Elements[i_].func, Num_for_extra);
                 }
                 SetData();
                 AddInnerPage(Elements.length);
@@ -550,7 +630,7 @@
             document.getElementById("add_extra").style = "visibility: hidden;";
         }
         //
-        function SlideFuncOneStep(func_) {
+        function SlideFuncOneStep(func_, param2) {
             for_change = [];
             answer_ = func_;
             for (let fi_ = 0; fi_ < func_.length; fi_++) {
@@ -569,7 +649,12 @@
             for (let i__ = 0; i__ < for_change.length; i__++) {
                 element = for_change[i__];
                 str_b = String(answer_.substr(element.b, element.e - element.b));
-                str_ = String(Number(answer_.substr(element.b, element.e - element.b))+1);
+                    num_ = Number(answer_.substr(element.b, element.e - element.b));
+                    if (num_ >= param2) {
+                        num_++;
+                    }
+                    str_ = String(num_);
+
                 console.log(str_b, str_)
                 answer_ = answer_.substr(0, element.b) + str_ + answer_.substr(element.e);
                 if (str_b.length !== str_.length) {
@@ -627,6 +712,37 @@
                 for_security.style = "visibility: hidden;";
                 localStorage.setItem("ForCreLogAndPas", JSON.stringify({login:users.login, password:users.password}));
             }        
+        }
+        //
+        function sart(param1, param2, param3) {
+            if (param1 === "W") {
+                NumOfS = Sortament[Sortament.length-1].N;
+                for (let i_ = Sortament.length-1; i_ >= 0; i_--) {
+                    if (Sortament[i_].Wx >= param2) {
+                        NumOfS = Sortament[i_].N;
+                    }
+                }
+                answer_ = NumOfS;
+            }   
+            if (param1 === "N") {
+                Sortament.forEach(element => {
+                    if (element.N === param2) {
+                        answer_ = element;
+                    }
+                });
+                if (param3 === "W") {
+                    answer_ = answer_.Wx;
+                } else if (param3 === "I") {
+                    answer_ = answer_.Ix;
+                } else if (param3 === "g") {
+                    answer_ = answer_.g;
+                } else if (param3 === "b") {
+                    answer_ = answer_.b;
+                } else if (param3 === "t") {
+                    answer_ = answer_.t;
+                }
+            }
+            return answer_;
         }
         //
         function kvadrat(param1) {
