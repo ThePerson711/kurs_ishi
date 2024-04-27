@@ -745,6 +745,22 @@
             return answer_;
         }
         //
+        function silliq(param1, param2) {
+            answer_ = param1;
+            answer_/=param2;
+            answer_ = Math.round(answer_);
+            answer_ *= param2;
+            return answer_;
+        }
+        //
+        function kichik(param1, param2) {
+            if (param1 <= param2) {
+                return 1111111;
+            } else {
+                return 1000000;
+            }
+        }
+        //
         function kvadrat(param1) {
             return Math.pow(param1, 2);
         }
