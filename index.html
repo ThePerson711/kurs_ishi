@@ -58,6 +58,7 @@
         }
             .main_panel_elem {
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 font-weight: bold;
@@ -67,6 +68,9 @@
                 border-radius: 10%;
                 box-shadow: 0 0 calc(1vw*2) rgb(19, 24, 23);
             }
+                .main_panel_elem p {
+                    margin: 0;
+                }
         .func_panel {
             display: flex;
             flex-direction: column;
@@ -97,6 +101,43 @@
                     align-items: center;
                     height: calc(1vh*3);
                 }
+                    .func_num {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: red;
+                        border-radius: calc(1vw*0.5);
+                        width: calc(1vw*8);
+                        height: calc(1vh*3);
+                        transform: translateY(Calc(1vh*(0)));
+                        zoom: 1.2;
+                        box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
+                    }
+                    .func_name {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: red;
+                        border-radius: calc(1vw*0.5);
+                        width: calc(1vw*30);
+                        height: calc(1vh*3);
+                        margin: 0 calc(1vw*2);
+                        transform: translateY(Calc(1vh*(0)));
+                        zoom: 1.2;
+                        box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
+                    }
+                    .func_enF {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        transform: translateY(Calc(1vh*(0)));
+                        background-color: red;
+                        border-radius: calc(1vw*0.5);
+                        width: calc(1vw*8);
+                        height: calc(1vh*3);
+                        zoom: 1.3;
+                        box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
+                    }
                 .func_ans {
                     display: flex;
                     justify-content: center;
@@ -104,41 +145,30 @@
                     background-color: pink;
                     width: calc(1vw*60);
                     height: calc(1vh*8);
-                }
-                .func_num {
+                    border-radius: calc(1vw*1);
+                }   
+                .func_move {
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    position: absolute;
                     background-color: red;
                     width: calc(1vw*8);
-                    height: calc(1vh*3);
-                    transform: translateY(Calc(1vh*(0)));
+                    height: calc(1vw*8);
+                    border-radius: calc(1vw*2.5);
+                    transform: translate(calc(1vw*(-1)*30), Calc(1vh*(2.75)));
                     zoom: 1.2;
                     box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
+                    cursor: grab;
                 }
-                .func_name {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: red;
-                    width: calc(1vw*30);
-                    height: calc(1vh*3);
-                    margin: 0 calc(1vw*2);
-                    transform: translateY(Calc(1vh*(0)));
-                    zoom: 1.2;
-                    box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
+                .func_move:active {
+                    cursor: move;
                 }
-                .func_enF {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    transform: translateY(Calc(1vh*(0)));
-                    background-color: red;
-                    width: calc(1vw*8);
-                    height: calc(1vh*3);
-                    zoom: 1.3;
-                    box-shadow: 0 0 calc(1vw*1) rgb(4, 4, 4);
-                }
+                    .func_move p {
+                        font-size: calc(1vw*7.5);   
+                        margin: 0;
+                    }
+
 
         .data_enter {
             display: flex;
@@ -169,6 +199,11 @@
                 }
                 .txar_3 {
                     height: calc(1vh*26);
+                }
+                .txar_4 {
+                    height: calc(1vh*10);
+                    font-size: calc(1vw*8);
+                    width: calc(1vw*68*0.8);
                 }
             .data_enter_title {
                 font-size: 20px;
@@ -242,29 +277,116 @@
         <button class="data_enter_btn" onclick="
             SetF_OK();">Ok</button>
     </div>
+    <div class="data_enter" id="add_extra">
+        <p class="data_enter_title"> Dan oldin  qoshadi</p>
+        <input class="data_enter_textare txar_4" id="add_extra_inp" placeholder="Number" type="number">
+        <button class="data_enter_btn" onclick="
+            AddExtra_OK();">Ok</button>
+    </div>
     <div class="screen" id="screen">
         <div class="main_panel" id="main_panel">
             <div class="main_panel_elem" id="add_elem" onclick="AddElem();">
-                Add
+                <p>Add</p>
             </div>
+            
+                <!-- ???? -->
+                <div class="main_panel_elem" id="add_elem" onclick="AddExtraOpenList();">
+                    <p>Add</p>
+                    <p>Extra</p>
+                </div>
+            
             <div class="main_panel_elem" id="clear_elem" onclick="ClearData();">
-                Clear
+                <p>Clear</p>
             </div>
             <div class="main_panel_elem" id="copy_elem" onclick="CopyData();">
-                Copy
+                <p>Copy</p>
             </div>
             <div class="main_panel_elem" id="setF_elem" onclick="SetF();">
-                Set(F)
+                <p>Set</p>
+                <p>Func</p>
             </div>
             <div class="main_panel_elem" id="Projects" onclick="ProjOpenList();">
-                Proj
+                <p>Proj</p>
             </div>
         </div>
         <div class="func_panel" id="func_panel">
+
+            <!--
+            <div class="func_elem" id="func_elem_id_0">
+                <div class="func_help_">
+                    <div class="func_move" id="func_move_id_0">
+                        <p>&#10021</p>
+                    </div>
+                    <div class="func_num" id="func_num_id_${ind_}">
+                        0
+                    </div>
+                    <div class="func_name" id="func_name_id_${ind_}">
+                        Name
+                    </div>
+                    <div class="func_enF" id="func_enF_id_${ind_}" onclick="
+                    Func_Enter_Data(1)">
+                        #
+                    </div>
+                </div>
+                <div class="func_ans" id="func_ans_id_${ind_}">
+                    Answer
+                </div>
+            </div>
+            -->
         </div>
     </div>
 
     <script>
+        let Sortament = [
+            {
+                N: 10,
+                g: 9.46,
+                b: 55,
+                t: 7.2,
+                Ix: 198,
+                Wx: 39.7
+            },
+            {
+                N: 20,
+                g: 21,
+                b: 100,
+                t: 8.4,
+                Ix: 1840,
+                Wx: 184
+            },
+            {
+                N: 27,
+                g: 31.5,
+                b: 125,
+                t: 9.8,
+                Ix: 5010,
+                Wx: 371
+            },
+            {
+                N: 30,
+                g: 36.5,
+                b: 135,
+                t: 10.2,
+                Ix: 7080,
+                Wx: 472
+            },
+            {
+                N: 50,
+                g: 78.5,
+                b: 170,
+                t: 15.2,
+                Ix: 39727,
+                Wx: 1598
+            },
+            {
+                N: 55,
+                g: 92.6,
+                b: 180,
+                t: 16.5,
+                Ix: 55962,
+                Wx: 2035
+            }
+        ];
         let Admin_Open = false;
         let Elements = [];
         let w = [];
@@ -307,6 +429,20 @@
         }
 
         UpDate();
+
+        //
+        /*
+        (document.getElementById("func_move_id_0")).addEventListener("mousedown", () => {
+            MOVEDIV = true;
+            
+            document.getElementById("func_elem_id_0").style = `            
+                transform: translate(10px, 10px);`;
+        });
+
+        (document.getElementById("func_move_id_0")).addEventListener("mouseup", () => {
+            MOVEDIV = false;
+        });
+        */
         //
         function AddElem() {
             Elements.push({
@@ -360,9 +496,14 @@
         }
         //
         function ClearData() {
-            localStorage.removeItem("Elements_data_for_LS");
-            Elements = [];
-            func_panel.innerHTML = "";
+                        
+            if (confirm("Are you sure?")) {
+                localStorage.removeItem("Elements_data_for_LS");
+                Elements = [];
+                func_panel.innerHTML = "";
+            } else {
+            console.log("no");
+            }
         }
         //
         function CopyData() {
@@ -388,8 +529,66 @@
             document.getElementById("setF").style = "visibility: hidden;";
         }
         //
-        function ProjOpenList() {
+        function AddExtra_OK() {
+            Num_for_extra = document.getElementById("add_extra_inp").value;
+            
+            if (Num_for_extra >= 1 && Num_for_extra < Elements.length) {
+                console.log(Num_for_extra);
+                Elements.splice(Num_for_extra - 1, 0, {
+                    name: `Name_${Elements.length+1}`,
+                    func: "0"
+                });
+                for (let i_ = Num_for_extra; i_ < Elements.length; i_++) {
+                    console.log("> ", SlideFuncOneStep(Elements[i_].func) )
+                    Elements[i_].func = SlideFuncOneStep(Elements[i_].func);
+                }
+                SetData();
+                AddInnerPage(Elements.length);
+                UpDate();
+            }
+            document.getElementById("add_extra").style = "visibility: hidden;";
+        }
+        //
+        function SlideFuncOneStep(func_) {
+            for_change = [];
+            answer_ = func_;
+            for (let fi_ = 0; fi_ < func_.length; fi_++) {
+                if (func_.substr(fi_, 2) === "w[") {
+                    for (let fu_ = fi_; fu_ < func_.length; fu_++) {
+                        if (func_.substr(fu_, 1) === "]") {
+                            for_change.push({b: fi_+2, e: fu_});
+                            console.log(func_.substr(for_change[for_change.length-1].b, 
+                                for_change[for_change.length-1].e-for_change[for_change.length-1].b))
+                            break;
+                        }
+                    }
+                }
+            }
+            console.log(for_change);
+            for (let i__ = 0; i__ < for_change.length; i__++) {
+                element = for_change[i__];
+                str_b = String(answer_.substr(element.b, element.e - element.b));
+                str_ = String(Number(answer_.substr(element.b, element.e - element.b))+1);
+                console.log(str_b, str_)
+                answer_ = answer_.substr(0, element.b) + str_ + answer_.substr(element.e);
+                if (str_b.length !== str_.length) {
+                    console.log("err")
+                    for (let i___ = i__+1; i___ < for_change.length; i___++) {
+                        for_change[i___].b += 1;
+                        for_change[i___].e += 1;
+                    }
+                }
 
+            }
+            return answer_;
+        }
+        //
+        function ProjOpenList() {
+            // ???
+        }
+        //
+        function AddExtraOpenList() {
+            document.getElementById("add_extra").style = "visibility: visible;";
         }
         //
         function AddInnerPage(ind_) {
@@ -410,6 +609,11 @@
                     Answer
                 </div>
             </div>`;
+        }
+        //
+        function MoveFuncD(index_) {
+            
+            //document.getElementById(`func_elem_id_${index_}`).style.left = 
         }
         //
         function CheckPassWord() {
