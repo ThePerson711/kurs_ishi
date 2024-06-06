@@ -250,6 +250,71 @@
                     width: calc(1vw*20);
                     height: calc(1vh*6);
                 }
+        .projects {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: end;
+            position: fixed;
+            z-index: 8;
+            width: calc(1vw*100);
+            height: calc(1vh*91);
+            background-color: transparent;
+            margin: 0;
+            left: 0;
+            bottom: 0;
+            visibility: hidden;
+        }
+            .projects_list {
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                align-items: center;
+                background-color: rgb(210, 183, 217);
+                width: calc(1vw*80);
+                height: calc(1vh*80);
+                margin: calc(1vh*5) calc(1vw*5);
+                border-radius: calc(1vw*5);
+                border: double calc(1vw*2) black;
+                box-shadow: 0 0 calc(1vw*10) black;
+                overflow-y: auto;
+                padding-bottom: calc(1vh*15);
+            }
+                .projects_list div:nth-child(2n+1) {
+                    background-color: lightcoral;
+                }
+                .projects_list div:nth-child(2n+0) {
+                    background-color: rgb(124, 204, 213);
+                }
+                .project_bar {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: calc(1vh*10);
+                    margin-top: calc(1vh*0.5);
+                    border-radius: calc(1vw*2);
+                    border-bottom: solid calc(1vh*0.5) rgb(94, 80, 80);
+                }
+                    .projects_p {
+                        font-size: calc(1vw*7);
+                        font-weight: bold;
+                        color: rgb(111, 28, 28);
+                    }
+            .add_project {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                width: calc(1vw*25);
+                height: calc(1vw*16);
+                border-radius: calc(1vw*4);
+                bottom: calc(1vh*7);
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: red;
+                z-index: 11;
+            }
     </style>
 </head>
 <body>
@@ -282,6 +347,49 @@
         <input class="data_enter_textare txar_4" id="add_extra_inp" placeholder="Number" type="number">
         <button class="data_enter_btn" onclick="
             AddExtra_OK();">Ok</button>
+    </div>
+    <div class="projects" id="projects_div">
+        <div class="projects_list">
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+            <div class="project_bar">
+                <p class="projects_p">Kurs ihi</p>
+            </div>
+        </div>
+        <div class="add_project">
+            Add
+        </div>
     </div>
     <div class="screen" id="screen">
         <div class="main_panel" id="main_panel">
@@ -543,8 +651,9 @@
                 document.getElementById(`func_name_id_${i+1}`).innerHTML = String(Elements[i].name);
                 w.push(Number(eval(Elements[i].func)));
                 document.getElementById(`func_ans_id_${i+1}`).innerHTML = 
-                    String( w[i+1] );
+                    String( Math.round(w[i+1]*1000)/1000 );
             }
+            Check();
         }
         //
         function Calculate(func_) {
@@ -795,6 +904,43 @@
         //
         function version() {
             console.log(VERSION);
+        }
+        //
+        function Check() {
+            err_pop_up = "";
+            for (let index = 0; index < Elements.length; index++) {
+                if (Elements[index].name.substr(0, 3) === "@_t") {
+                    console.log(">")
+                    if (eval(Elements[index].func) === 1000000) {
+                        console.log("err")
+                        err_pop_up += `err >> ${index+1} >> ${(Elements[index].func)}\n`;
+                    }
+                }
+            }
+            if (err_pop_up !== "") {
+                alert(err_pop_up)
+            }
+        }
+        //
+        function search(param1) {
+            for (let index = 0; index < Elements.length; index++) {
+                if (ChekIntoStr(String(param1), String(eval(Elements[index].func)))) {
+                    console.log("search", index+1)
+                }
+            }
+            return answer_;
+        }
+        //
+        function ChekIntoStr(param1, param2) {
+            answer_ = false;
+            if (param1.length <= param2.length) {
+                for (let i = 0; i < param2.length; i++) {
+                    if (param2.substr(i, param1.length) === param1) {
+                        answer_ = true;
+                    }
+                }
+            }
+            return answer_;
         }
     </script>
 </body>
